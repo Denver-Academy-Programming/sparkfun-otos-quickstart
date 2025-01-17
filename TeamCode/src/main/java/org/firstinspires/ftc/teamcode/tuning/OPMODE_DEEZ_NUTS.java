@@ -7,20 +7,38 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
 public class OPMODE_DEEZ_NUTS extends LinearOpMode {
+
+    private DcMotor viperUp;
+
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, new Pose2d(0, 0, 0));
 
+        // Viper Slide Initialization
+        int pos;
+        int startpos;
+
+        viperUp = hardwareMap.get(DcMotor.class, "viperUp");
+
+        pos = viperUp.getCurrentPosition();
+        startpos = viperUp.getCurrentPosition();
+        viperUp.setTargetPosition(0);
+        viperUp.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ((DcMotorEx) viperUp).setTargetPositionTolerance(1000);
+
         waitForStart();
 
         while (opModeIsActive()) {
+            // Drive control code
             drive.setDrivePowers(new PoseVelocity2d(
                     new Vector2d(
                             -gamepad1.left_stick_y,
@@ -34,6 +52,20 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             telemetry.addData("x", drive.pose.position.x);
             telemetry.addData("y", drive.pose.position.y);
             telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+
+            // Viper Slide control code
+            viperUp.setPower(1);
+            if (pos >= startpos) {
+                pos = 10;
+            }
+            if (pos <= -3310) {
+                pos = -3310;
+            }
+            pos += gamepad1.left_trigger * 20;
+            pos += gamepad1.right_trigger * -20;
+            viperUp.setTargetPosition(pos);
+
+            // Telemetry updates
             telemetry.update();
 
             TelemetryPacket packet = new TelemetryPacket();
