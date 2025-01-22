@@ -63,6 +63,7 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             telemetry.addData("y", drive.pose.position.y);
             telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
             telemetry.addData("servo", servo);
+            telemetry.addData("viperUp startpos", startpos);
             telemetry.addData("viperUp", pos);
 
 
