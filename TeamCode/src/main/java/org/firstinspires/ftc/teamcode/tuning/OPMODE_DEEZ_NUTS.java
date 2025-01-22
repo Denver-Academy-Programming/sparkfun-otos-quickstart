@@ -18,6 +18,8 @@ import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 public class OPMODE_DEEZ_NUTS extends LinearOpMode {
 
     private DcMotor viperUp;
+    private DcMotor viperForward;
+
     private ServoController ControlHub_ServoController;
     private Servo specimon;
 
@@ -29,21 +31,31 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
 
         // Viper Slide and Servo Initialization
         int pos;
+        int pos2;
         double servo;
         int startpos;
+        int startpos2;
+
 
         ControlHub_ServoController = hardwareMap.get(ServoController.class, "Control Hub");
         specimon = hardwareMap.get(Servo.class, "specimon");
         viperUp = hardwareMap.get(DcMotor.class, "viperUp");
+        viperForward = hardwareMap.get(DcMotor.class, "viperForward");
+
 
         ControlHub_ServoController.pwmEnable();
         servo = specimon.getPosition();
         pos = viperUp.getCurrentPosition();
+        pos2 = viperForward.getCurrentPosition();
         startpos = viperUp.getCurrentPosition();
+        startpos2 = viperForward.getCurrentPosition();
         viperUp.setTargetPosition(0);
+        viperForward.setTargetPosition(0);
         viperUp.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        viperForward.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         ((DcMotorEx) viperUp).setTargetPositionTolerance(1000);
-        viperUp.setPower(1);
+        ((DcMotorEx) viperForward).setTargetPositionTolerance(1000);
+
 
         waitForStart();
 
@@ -62,9 +74,13 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             telemetry.addData("x", drive.pose.position.x);
             telemetry.addData("y", drive.pose.position.y);
             telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
-            telemetry.addData("servo", servo);
-            telemetry.addData("viperUp startpos", startpos);
-            telemetry.addData("viperUp", pos);
+            telemetry.addData("servo", specimon.getPosition());
+            telemetry.addData("start pos", startpos);
+            telemetry.addData("pos", pos);
+            telemetry.addData("viperUp", viperUp.getCurrentPosition());
+            telemetry.addData("start pos 2", startpos2);
+            telemetry.addData("pos 2", pos2);
+            telemetry.addData("viperForward", viperForward.getCurrentPosition());
 
 
 
@@ -83,12 +99,12 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             }
             specimon.setPosition(servo);
 
-            // Viper Slide control code
+            // Viper Slide control code up
             if (pos >= startpos) {
                 pos = startpos;
             }
-            if (pos <= -3310 - startpos) {
-                pos = -3310 - startpos;
+            if (pos <= -3310 + startpos) {
+                pos = -3310 + startpos;
             }
             if (pos >= startpos) {
                 viperUp.setPower(0);
@@ -98,6 +114,24 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             pos += gamepad1.left_trigger * 20;
             pos += gamepad1.right_trigger * -20;
             viperUp.setTargetPosition(pos);
+
+            // Viper Slide control code forward
+            if (pos2 >= startpos2) {
+                pos2 = startpos2;
+            }
+            if (pos2 <= -3310 + startpos2) {
+                pos2 = -3310 + startpos2;
+            }
+            if (pos2 >= startpos2) {
+                viperForward.setPower(0);
+            } else {
+                viperForward.setPower(1);
+            }
+            pos2 += gamepad2.left_trigger * 20;
+            pos2 += gamepad2.right_trigger * -20;
+            viperForward.setTargetPosition(pos2);
+
+
 
             // Telemetry updates
             telemetry.update();
