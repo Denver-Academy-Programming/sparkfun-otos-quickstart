@@ -43,6 +43,7 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
         viperUp.setTargetPosition(0);
         viperUp.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         ((DcMotorEx) viperUp).setTargetPositionTolerance(1000);
+        viperUp.setPower(1);
 
         waitForStart();
 
@@ -61,10 +62,9 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             telemetry.addData("x", drive.pose.position.x);
             telemetry.addData("y", drive.pose.position.y);
             telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
-            telemetry.addData("servo", specimon.getPosition());
-            telemetry.addData("start pos", startpos);
-            telemetry.addData("pos", pos);
-            telemetry.addData("viperUp", viperUp.getCurrentPosition());
+            telemetry.addData("servo", servo);
+            telemetry.addData("viperUp startpos", startpos);
+            telemetry.addData("viperUp", pos);
 
 
 
@@ -87,8 +87,8 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             if (pos >= startpos) {
                 pos = startpos;
             }
-            if (pos <= -3310 + startpos) {
-                pos = -3310 + startpos;
+            if (pos <= -3310 - startpos) {
+                pos = -3310 - startpos;
             }
             if (pos >= startpos) {
                 viperUp.setPower(0);
