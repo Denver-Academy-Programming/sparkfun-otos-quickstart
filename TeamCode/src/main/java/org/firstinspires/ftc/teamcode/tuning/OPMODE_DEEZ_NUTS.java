@@ -63,10 +63,10 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             // Drive control code
             drive.setDrivePowers(new PoseVelocity2d(
                     new Vector2d(
-                            -gamepad1.left_stick_y,
-                            -gamepad1.left_stick_x
+                            (-gamepad1.left_stick_y * 0.6),
+                            (-gamepad1.left_stick_x * 0.6)
                     ),
-                    -gamepad1.right_stick_x
+                    (-gamepad1.right_stick_x * 0.6)
             ));
 
             drive.updatePoseEstimate();
@@ -86,10 +86,10 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
 
             // Servo control code
             if (gamepad1.dpad_up) {
-                servo += 0.005;
+                servo += 0.01;
             }
             if (gamepad1.dpad_down) {
-                servo -= 0.005;
+                servo -= 0.01;
             }
             if (servo >= 1) {
                 servo = 1;
