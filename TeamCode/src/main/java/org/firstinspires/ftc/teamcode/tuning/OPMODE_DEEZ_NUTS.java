@@ -119,8 +119,8 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             if (pos2 >= startpos2) {
                 pos2 = startpos2;
             }
-            if (pos2 <= -3310 + startpos2) {
-                pos2 = -3310 + startpos2;
+            if (pos2 <= -1550 + startpos2) {
+                pos2 = -1550 + startpos2;
             }
             if (pos2 >= startpos2) {
                 viperForward.setPower(0);
