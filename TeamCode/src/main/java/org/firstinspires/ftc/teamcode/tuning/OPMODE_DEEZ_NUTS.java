@@ -62,6 +62,10 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             telemetry.addData("x", drive.pose.position.x);
             telemetry.addData("y", drive.pose.position.y);
             telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+            telemetry.addData("servo", servo);
+            telemetry.addData("viperUp", pos);
+
+
 
             // Servo control code
             if (gamepad1.dpad_up) {
@@ -80,12 +84,12 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
 
             // Viper Slide control code
             if (pos >= startpos) {
-                pos = 10;
+                pos = startpos;
             }
-            if (pos <= -3310) {
-                pos = -3310;
+            if (pos <= -3310 - startpos) {
+                pos = -3310 - startpos;
             }
-            if (pos <= startpos) {
+            if (pos >= startpos) {
                 viperUp.setPower(0);
             } else {
                 viperUp.setPower(1);
