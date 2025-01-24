@@ -22,6 +22,8 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
 
     private ServoController ControlHub_ServoController;
     private Servo specimon;
+    private Servo sample;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -33,18 +35,21 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
         int pos;
         int pos2;
         double servo;
+        double servo2;
         int startpos;
         int startpos2;
 
 
         ControlHub_ServoController = hardwareMap.get(ServoController.class, "Control Hub");
         specimon = hardwareMap.get(Servo.class, "specimon");
+        sample = hardwareMap.get(Servo.class, "sample");
         viperUp = hardwareMap.get(DcMotor.class, "viperUp");
         viperForward = hardwareMap.get(DcMotor.class, "viperForward");
 
 
         ControlHub_ServoController.pwmEnable();
         servo = specimon.getPosition();
+        servo2 = sample.getPosition();
         viperUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         viperForward.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         pos = viperUp.getCurrentPosition();
@@ -77,6 +82,7 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             telemetry.addData("y", drive.pose.position.y);
             telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
             telemetry.addData("servo", specimon.getPosition());
+            telemetry.addData("servo2", sample.getPosition());
             telemetry.addData("start pos", startpos);
             telemetry.addData("pos", pos);
             telemetry.addData("viperUp", viperUp.getCurrentPosition());
@@ -100,6 +106,22 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
                 servo = 0.65;
             }
             specimon.setPosition(servo);
+
+
+            // Servo control code
+            if (gamepad1.dpad_left) {
+                servo2 += 0.01;
+            }
+            if (gamepad1.dpad_right) {
+                servo2 -= 0.01;
+            }
+//            if (servo2 >= 1) {
+//                servo2 = 1;
+//            }
+//            if (servo2 <= 0.65) {
+//                servo2 = 0.65;
+//            }
+            sample.setPosition(servo2);
 
             // Viper Slide control code up
             if (pos >= startpos) {
