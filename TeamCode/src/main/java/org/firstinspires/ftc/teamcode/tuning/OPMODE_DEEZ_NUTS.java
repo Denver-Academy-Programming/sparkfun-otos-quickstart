@@ -48,8 +48,12 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
 
 
         ControlHub_ServoController.pwmEnable();
-        servo = specimon.getPosition();
+        //servo = specimon.getPosition();
+        servo = 0.65;
+        specimon.setPosition(servo);
         servo2 = sample.getPosition();
+        //servo2 = null;
+        //sample.setPosition(servo2);
         viperUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         viperForward.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         pos = viperUp.getCurrentPosition();
