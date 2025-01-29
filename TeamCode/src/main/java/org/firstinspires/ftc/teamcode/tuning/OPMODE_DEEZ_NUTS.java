@@ -51,8 +51,8 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
         //servo = specimon.getPosition();
         servo = 0.65;
         specimon.setPosition(servo);
-        servo2 = sample.getPosition();
-        //servo2 = null;
+        //servo2 = sample.getPosition();
+        servo2 = 0.69;
         sample.setPosition(servo2);
         viperUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         viperForward.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -119,12 +119,12 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             if (gamepad1.dpad_right) {
                 servo2 -= 0.01;
             }
-//            if (servo2 >= 1) {
-//                servo2 = 1;
-//            }
-//            if (servo2 <= 0.65) {
-//                servo2 = 0.65;
-//            }
+            if (servo2 >= 0.75) {
+                servo2 = 0.75;
+            }
+            if (servo2 <= 0) {
+                servo2 = 0;
+            }
             sample.setPosition(servo2);
 
             // Viper Slide control code up
