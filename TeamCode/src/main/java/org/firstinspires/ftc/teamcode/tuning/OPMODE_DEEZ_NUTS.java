@@ -75,19 +75,19 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
 
         //servo = specimon.getPosition();
         servo = 0.65;
-        specimon.setPosition(servo);
+        ////specimon.setPosition(servo);
 
         //servo2 = sample.getPosition();
         servo2 = 0.69;
-        sample.setPosition(servo2);
+        ///sample.setPosition(servo2);
 
         //servo3 = intake.getPosition();
         //servo3 = 0.69;
         intake.setPower(0);
 
-        servo4 = inrot.getPosition();
-        //servo4 = 0.69;
-        inrot.setPosition(servo4);
+        //servo4 = inrot.getPosition();
+        servo4 = 0.69;
+        ///inrot.setPosition(servo4);
 
         servo5 = convayor.getPower();
         //servo5 = 0.69;
@@ -120,10 +120,10 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             // Drive control code
             drive.setDrivePowers(new PoseVelocity2d(
                     new Vector2d(
-                            (-gamepad1.left_stick_y * 0.6),
-                            (-gamepad1.left_stick_x * 0.6)
+                            (-gamepad1.left_stick_y * 0.5),
+                            (-gamepad1.left_stick_x * 0.5)
                     ),
-                    (-gamepad1.right_stick_x * 0.6)
+                    (-gamepad1.right_stick_x * 0.5)
             ));
 
             drive.updatePoseEstimate();
