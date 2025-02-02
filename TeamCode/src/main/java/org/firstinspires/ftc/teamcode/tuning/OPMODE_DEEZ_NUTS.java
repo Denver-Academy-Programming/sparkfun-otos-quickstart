@@ -23,7 +23,7 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
 
 
     private ServoController ControlHub_ServoController;
-    private Servo specimon;
+    private CRServo specimon;
     private Servo sample;
     private CRServo intake;
     private Servo  inrot;
@@ -41,7 +41,7 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
         // Viper Slide and Servo Initialization
 
         // servos
-        double servo;
+        //double servo;
         double servo2;
         //double servo3;
         double servo4;
@@ -58,7 +58,7 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
         ControlHub_ServoController = hardwareMap.get(ServoController.class, "Control Hub");
         // servo hardware mapping
 
-        specimon = hardwareMap.get(Servo.class, "specimon");
+        specimon = hardwareMap.get(CRServo.class, "specimon");
         sample = hardwareMap.get(Servo.class, "sample");
         intake = hardwareMap.get(CRServo.class, "intake");
         inrot = hardwareMap.get(Servo.class, "inrot");
@@ -74,8 +74,9 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
         // set servo positions
 
         //servo = specimon.getPosition();
-        servo = 0.65;
+        //servo = 0.65;
         ////specimon.setPosition(servo);
+        specimon.setPower(0);
 
         //servo2 = sample.getPosition();
         servo2 = 0.69;
@@ -131,8 +132,7 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             telemetry.addData("x", drive.pose.position.x);
             telemetry.addData("y", drive.pose.position.y);
             telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
-            telemetry.addData("servo - specimon - val", servo);
-            telemetry.addData("servo - specimon - pos", specimon.getPosition());
+            telemetry.addData("servo - specimon - pos", specimon.getPower());
             telemetry.addData("servo2 - sample - val", servo2);
             telemetry.addData("servo2 - sample - pos", sample.getPosition());
             telemetry.addData("servo3 - intake", intake.getPower());
@@ -151,19 +151,15 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
 
 
             // Specimon Servo control code
-            if (gamepad1.dpad_up) {
-                servo += 0.01;
+            if (gamepad1.a) {
+                specimon.setPower(0.2);
             }
-            if (gamepad1.dpad_down) {
-                servo -= 0.01;
+            if (gamepad1.y) {
+                specimon.setPower(-0.2);
             }
-            if (servo >= 1) {
-                servo = 1;
+            if (!gamepad1.a && !gamepad1.y) {
+                specimon.setPower(0);
             }
-            if (servo <= 0.65) {
-                servo = 0.65;
-            }
-            specimon.setPosition(servo);
 
 
             // Sample Servo control code
