@@ -157,11 +157,11 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             if (gamepad1.dpad_down) {
                 servo -= 0.01;
             }
-            if (servo >= 1) {
-                servo = 1;
+            if (servo >= 0.43) {
+                servo = 0.43;
             }
-            if (servo <= 0.65) {
-                servo = 0.65;
+            if (servo <= 0) {
+                servo = 0;
             }
             specimon.setPosition(servo);
 
@@ -193,17 +193,17 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             }
 
             // Inrot Servo control code
-            if (gamepad2.dpad_up) {
-                servo4 += 0.01;
+            if (gamepad2.dpad_left) {
+                servo4 += 0.05;
             }
-            if (gamepad2.dpad_down) {
-                servo4 -= 0.01;
+            if (gamepad2.dpad_right) {
+                servo4 -= 0.05;
             }
-            if (servo4 >= 0.7894) {
-                servo4 = 0.7894;
+            if (servo4 >= 0.7) {
+                servo4 = 0.7;
             }
-            if (servo4 <= 0.3194) {
-                servo4 = 0.3194;
+            if (servo4 <= 0) {
+                servo4 = 0;
             }
             inrot.setPosition(servo4);
 
@@ -215,21 +215,28 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
                 convayor.setPower(0);
             }
 
+
+            pos += gamepad1.left_trigger * 20;
+            pos += gamepad1.right_trigger * -20;
+
             // Viper Slide control code up
             if (pos >= startpos) {
                 pos = startpos;
             }
-            if (pos <= -2446 + startpos) {
-                pos = -2446 + startpos;
+            if (pos <= -2979 + startpos) {
+                pos = -2979 + startpos;
             }
             if (pos >= startpos) {
                 viperUp.setPower(0);
             } else {
                 viperUp.setPower(1);
             }
-            pos += gamepad1.left_trigger * 20;
-            pos += gamepad1.right_trigger * -20;
+
             viperUp.setTargetPosition(pos);
+
+
+            pos2 += gamepad2.left_trigger * 20;
+            pos2 += gamepad2.right_trigger * -20;
 
             // Viper Slide control code forward
             if (pos2 >= startpos2) {
@@ -243,8 +250,7 @@ public class OPMODE_DEEZ_NUTS extends LinearOpMode {
             } else {
                 viperForward.setPower(1);
             }
-            pos2 += gamepad2.left_trigger * 20;
-            pos2 += gamepad2.right_trigger * -20;
+
             viperForward.setTargetPosition(pos2);
 
 
